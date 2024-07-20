@@ -1,0 +1,7 @@
+{
+    "year": 2023,
+    "model1_accuracy%":  57.115,
+
+    "model_2_pointspread_as_ml_accuracy%":  54.687,
+    "model_2_pointspread_exact_accuracy": 15.625
+}

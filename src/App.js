@@ -2,8 +2,10 @@ import React, { useState, Alert, Button , useRef} from 'react';
 
 import './App.css';
 import xtype from 'xtypejs'
-
+import { useCSVReader } from 'react-papaparse';
+import * as Papa from 'papaparse';
 // import blank from 'b.jfif';
+import trainingdata from "./2023.json"
 
 
 const App = () => {
@@ -40,8 +42,8 @@ const App = () => {
 
 		var model_description_text = "Model Description: " + 
 			"For a given match, the Dixon Coles model calculates the expected goals for both teams. " +
-			"Using the Poisson distribution and the expected goals, we can then determine the probability of various match outcomes. " +
-			"P(X_i,j =x, Y_j,i =y) = (e−^λ*λ^x)/x! * (e^−μ*μ^y)/y! where λ=α_i*β_j*γ μ=α_j*β_i" +
+			"Using the Poisson distribution and the expected goals, we can then determine the probability of various match outcomes. " + 
+			"P(X_i,j =x, Y_j,i =y) = (e−^λ*λ^x)/x! * (e^−μ*μ^y)/y! where λ=α_i*β_j*γ μ=α_j*β_i " +
 			"In this equation, i and j refer to the home and away teams, respectively; " +
 			"α and β denote each team’s attack and defensive strength, respectively, " +
 			"while γ represents the home advantage factor. " +
@@ -57,9 +59,14 @@ const App = () => {
 			myImage.src = require("../data/poisson/" + file_name + ".jpg") 
 			const model_output_text = document.getElementById("model_output_id"); 
 			model_output_text.innerHTML = output_text
+			model_output_text.hidden = false
 
 			const model_descriton = document.getElementById("model_description"); 
 			model_descriton.innerHTML = model_description_text
+			model_descriton.hidden = false
+
+			const data_table = document.getElementById("data-table");
+			data_table.hidden = true
 		}
 	}
 
@@ -100,9 +107,14 @@ const App = () => {
 			myImage.src = require("../data/poisson/" + file_name + ".jpg") 
 			const model_output_text = document.getElementById("model_output_id");
 			model_output_text.innerHTML = output_text
+			model_output_text.hidden = false
 
 			const model_descriton = document.getElementById("model_description"); 
 			model_descriton.innerHTML = model_description_text
+			model_descriton.hidden = false
+
+			const data_table = document.getElementById("data-table");
+			data_table.hidden = true
 		}
 	}
 
@@ -140,9 +152,14 @@ const App = () => {
 			myImage.src = require("../data/svm/" + file_name + ".jpg")
 			const model_output_text = document.getElementById("model_output_id"); 
 			model_output_text.innerHTML = output_text
+			model_output_text.hidden = false
 
 			const model_descriton = document.getElementById("model_description"); 
 			model_descriton.innerHTML = model_description_text
+			model_descriton.hidden = false
+
+			const data_table = document.getElementById("data-table");
+			data_table.hidden = true
 		}
 	}
 
@@ -179,8 +196,18 @@ const App = () => {
 		// change img.src url and output text
 		if (file_name.length != 0) {
 			myImage.src = require("../data/regression/" + file_name + ".jpg") 
+			myImage.hidden = false
+
 			const model_output_text = document.getElementById("model_output_id"); 
 			model_output_text.innerHTML = output_text
+			model_output_text.hidden = false
+
+			const model_descriton = document.getElementById("model_description"); 
+			model_descriton.innerHTML = model_description_text
+			model_descriton.hidden = false
+
+			const data_table = document.getElementById("data-table");
+			data_table.hidden = true
 		}
 	}
 
@@ -203,7 +230,256 @@ const App = () => {
 	const [season_year, setValue] = useState(getInitialState);
 	const changeSeasonYear = (e) => {
 		setValue(e.target.value);
+
+		show_data()
 	};
+
+	function show_data(){
+
+		home_team_input.current.value = ""
+		away_team_input.current.value = ""
+		const data_table = document.getElementById("data-table");
+		data_table.hidden = false
+		// Now create and append to iDiv
+		// var innerDiv = document.createElement('div');
+		// innerDiv.className = 'block-2';
+		// // // The variable iDiv is still good... Just append to it.
+		// data_table.appendChild(innerDiv);
+	} 
+	// display training data
+	const useSortableData = (items, config = null) => {
+		const [sortConfig, setSortConfig] = React.useState(config);
+	  
+		const sortedItems = React.useMemo(() => {
+		  let sortableItems = [...items];
+		  if (sortConfig !== null) {
+			sortableItems.sort((a, b) => {
+			  if (a[sortConfig.key] < b[sortConfig.key]) {
+				return sortConfig.direction === 'ascending' ? -1 : 1;
+			  }
+			  if (a[sortConfig.key] > b[sortConfig.key]) {
+				return sortConfig.direction === 'ascending' ? 1 : -1;
+			  }
+			  return 0;
+			});
+		  }
+		  return sortableItems;
+		}, [items, sortConfig]);
+	  
+		const requestSort = (key) => {
+		  let direction = 'ascending';
+		  if (
+			sortConfig &&
+			sortConfig.key === key &&
+			sortConfig.direction === 'ascending'
+		  ) {
+			direction = 'descending';
+		  }
+		  setSortConfig({ key, direction });
+		};
+	  
+		return { items: sortedItems, requestSort, sortConfig };
+	  };
+	  
+	  const ProductTable = (props) => {
+
+		var sortable_data = trainingdata["defualt"]
+		if ((season_year != "") && (season_year!="Year")){
+			sortable_data = trainingdata[season_year]
+
+			const model_output_id = document.getElementById("model_output_id");
+			const model_description = document.getElementById("model_description");
+			const my_image = document.getElementById("my-image");
+
+			console.log("change .hidden")
+			model_output_id.hidden = true
+			model_description.hidden = true
+			// if (my_image.hidden)
+			my_image.hidden = true
+			
+		}
+		console.log("season_year: " + season_year + ".")
+		if ((season_year == "") || (season_year=="Year")){
+			console.log("no year: hide data-table")
+
+			const data_table = document.getElementById("data-table");
+			// const model_output_id = document.getElementById("model_output_id");
+			// const model_description = document.getElementById("model_description");
+			// const my_image = document.getElementById("my-image");
+			if (data_table){
+				console.log("change .hidden")
+				data_table.hidden = true
+				// model_output_id.hidden = true
+				// model_description.hidden = true
+				// my_image.hidden = true
+			}
+		}
+
+
+		// const { items, requestSort, sortConfig } = useSortableData(props.products);
+		const { items, requestSort, sortConfig } = useSortableData(sortable_data)
+		const getClassNamesFor = (name) => {
+		  if (!sortConfig) {
+			return;
+		  }
+		  return sortConfig.key === name ? sortConfig.direction : undefined;
+		};
+
+		return (
+		  <table>
+			<caption>{season_year} Data</caption>
+			<thead>
+			  <tr>
+
+				<th>
+					<button
+					type="button"
+					onClick={() => requestSort('date')}
+					className={getClassNamesFor('date')}
+					>
+					Date
+					</button>
+				</th>
+
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('home')}
+					className={getClassNamesFor('home')}
+				  >
+					Home
+				  </button>
+				</th>
+
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('away')}
+					className={getClassNamesFor('away')}
+				  >
+					Away
+				  </button>
+				</th>
+				
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('homegoals')}
+					className={getClassNamesFor('homegoals')}
+				  >
+					Home <br></br>Goals
+				  </button>
+				</th>
+
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('awaygoals')}
+					className={getClassNamesFor('awaygoals')}
+				  >
+					Away <br></br>Goals
+				  </button>
+				</th>
+
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('match')}
+					className={getClassNamesFor('matach')}
+				  >
+					Match
+				  </button>
+				</th>
+
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('homeattack')}
+					className={getClassNamesFor('homeattack')}
+				  >
+					Home <br></br>Attack
+				  </button>
+				</th>
+
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('awayattack')}
+					className={getClassNamesFor('awayattack')}
+				  >
+					Away <br></br>Attack
+				  </button>
+				</th>
+
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('homedefence')}
+					className={getClassNamesFor('homedefence')}
+				  >
+					Home <br></br>Defence
+				  </button>
+				</th>
+
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('awaydefence')}
+					className={getClassNamesFor('awaydefence')}
+				  >
+					Away <br></br>Defence
+				  </button>
+				</th>
+				<th>
+				  <button
+					type="button"
+					onClick={() => requestSort('result')}
+					className={getClassNamesFor('result')}
+				  >
+					Result
+				  </button>
+				</th>
+
+			  </tr>
+			</thead>
+			<tbody>
+			  {items.map((item) => (
+				// <tr key={item.id}>
+				//   <td>{item.name}</td>
+				//   <td>${item.price}</td>
+				//   <td>{item.stock}</td>
+				// </tr>
+				<tr key={item.id}>
+					<td>{item.date}</td>
+					<td>{item.home}</td>
+					<td>{item.away}</td>
+					<td>{item.homegoals}</td>
+					<td>{item.awaygoals}</td>
+					<td>{item.match}</td>
+					<td>{item.homeattack}</td>
+					<td>{item.awayattack}</td> 
+					<td>{item.homedefence}</td> 
+					<td>{item.awaydefence}</td> 
+					<td>{item.result}</td> 
+				</tr>
+			  ))}
+			</tbody>
+		  </table>
+		);
+
+		if (season_year=="") {
+			console.log('load empty season')
+			return;
+		}
+		
+	}
+
+	function get_training_data(){
+		var training_data_json = {}
+		if (season_year==2023){training_data_json=trainingdata[season_year]} 
+		if (season_year==2022){training_data_json=trainingdata[season_year]} 
+		return trainingdata[2023]
+	}
 
 	return (
 
@@ -221,14 +497,30 @@ const App = () => {
 			</header>
 
 			<main className="flex space-x-4">
-				<div>
+				<div className='left-column'>
 					<img id="my-image" src=""
-						class="my-image"
+						className="my-image"
 						hidden
 						>
 					</img>
 					<div id="model_output_id"></div>
 					<div id="model_description"></div>
+					<div id="data-table" class="data-table" hidden>
+						<ProductTable
+							products={ trainingdata["defualt"]}
+							// products={ trainingdata[2023]
+							//	[
+							// { id: 1, name: 'Cheese', price: 4.9, stock: 20 },
+							// { id: 2, name: 'Milk', price: 1.9, stock: 32 },
+							// { id: 3, name: 'Yoghurt', price: 2.4, stock: 12 },
+							// { id: 4, name: 'Heavy Cream', price: 3.9, stock: 9 },
+							// { id: 5, name: 'Butter', price: 0.9, stock: 99 },
+							// { id: 6, name: 'Sour Cream ', price: 2.9, stock: 86 },
+							// { id: 7, name: 'Fancy French Cheese 🇫🇷', price: 99, stock: 12 },
+							//	]
+							//}
+						/>
+					</div>
 				</div>
 
 				{/* space between data display and right column
@@ -306,7 +598,7 @@ const App = () => {
 				</div>
 
 			</main>
-		
+
 		<br/>
 		<div>
 			About: 

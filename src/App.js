@@ -240,17 +240,12 @@ const App = () => {
 		away_team_input.current.value = ""
 		const data_table = document.getElementById("data-table");
 		data_table.hidden = false
-		// Now create and append to iDiv
-		// var innerDiv = document.createElement('div');
-		// innerDiv.className = 'block-2';
-		// // // The variable iDiv is still good... Just append to it.
-		// data_table.appendChild(innerDiv);
 	} 
 	// display training data
 	const useSortableData = (items, config = null) => {
 		const [sortConfig, setSortConfig] = React.useState(config);
 	  
-		const sortedItems = React.useMemo(() => {
+		const sortedInpmtems = React.useMemo(() => {
 		  let sortableItems = [...items];
 		  if (sortConfig !== null) {
 			sortableItems.sort((a, b) => {

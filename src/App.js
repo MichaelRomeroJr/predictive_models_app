@@ -245,7 +245,7 @@ const App = () => {
 	const useSortableData = (items, config = null) => {
 		const [sortConfig, setSortConfig] = React.useState(config);
 	  
-		const sortedInpmtems = React.useMemo(() => {
+		const sortedItems = React.useMemo(() => {
 		  let sortableItems = [...items];
 		  if (sortConfig !== null) {
 			sortableItems.sort((a, b) => {

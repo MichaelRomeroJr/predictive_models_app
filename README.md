@@ -7,11 +7,18 @@
 Choose prediction method (games/season) and the output is displayed with a data visualization. 
 
 Examples: (coming soon)
-### Test Accuracy by Season
-![2023 data w/ SVM](https://imgur.com/qpcUV9u)
-![2022 data w/ Poisson Model](https://imgur.com/fraVBLg)
-![Predict Matchup w/ Poisson Model](https://imgur.com/XShSRNQ)
-![Predict Matchup w/ Regression](https://imgur.com/2XE5R5r)
+2023 data w/ SVM:<br>
+<img src="https://i.imgur.com/Ax8CRyL.png" alt="SVM data visual" width="400"/>
+<br>
+2023 data w/ Poisson Model:<br>
+<img src="https://i.imgur.com/fraVBLg.png" alt="Poisson Model data visual" width="400"/>
+<br>
+Predict Match w/ Poisson Model:<br>
+<img src="https://i.imgur.com/wwsOdHR.png" alt="Poisson Model data visual" width="400"/>
+<br>
+Predict Matchup w/ Regression:<br>
+<img src="https://i.imgur.com/2XE5R5r.png" alt="Regression data visual" width="400"/>
+<br>
 
 ### Future Updates:
 - Customizable features for training

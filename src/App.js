@@ -585,11 +585,11 @@ const App = () => {
 					<div className="space-y-2"> {/* Upload Data */}		
 						<button className="bg-gray-200 py-2 px-4 rounded">Upload Data</button>
 						{/* <button className="bg-gray-200 py-2 px-4 rounded">Save Data</button> */}
-						<button className="bg-gray-200 py-2 px-4 rounded">Clear all</button>
+						{/* <button className="bg-gray-200 py-2 px-4 rounded">Clear all</button> */}
 					</div>
-					<div className="space-y-2">
+					{/* <div className="space-y-2">
 						<button className="bg-gray-200 py-2 px-4 rounded">Train</button>
-					</div>
+					</div> */}
 				</div>
 
 			</main>

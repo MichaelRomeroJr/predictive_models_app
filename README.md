@@ -5,6 +5,7 @@
 4 different predictive models available to predict future matchups (games) or back test historical data (seasons). 
 
 Choose prediction method (games/season) and the output is displayed with a data visualization. 
+
 Source code of Models and some experimental scripts aviable [on my github](https://github.com/MichaelRomeroJr/predictive_models_soccer). 
 
 Examples: <br>

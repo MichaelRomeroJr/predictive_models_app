@@ -7,7 +7,18 @@
 Choose prediction method (games/season) and the output is displayed with a data visualization. 
 
 Examples: (coming soon)
- 
+### Test Accuracy by Season
+![2023 data w/ SVM](https://imgur.com/qpcUV9u)
+![2022 data w/ Poisson Model](https://imgur.com/fraVBLg)
+![Predict Matchup w/ Poisson Model](https://imgur.com/XShSRNQ)
+![Predict Matchup w/ Regression](https://imgur.com/2XE5R5r)
+
+### Future Updates:
+- Customizable features for training
+- Upload user data
+- api for fine tuning model
+
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

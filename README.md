@@ -2,7 +2,7 @@
 
 ## Experiment with Models
 
-4 different predictive models available to predict future matchups (games) or back test historical data (seasons). 
+4 different predictive models available to predict future matchups (games) or back test historical data (seasons) of international soccer matches. 
 
 Choose prediction method (games/season) and the output is displayed with a data visualization. 
 

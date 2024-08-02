@@ -8,14 +8,52 @@ import * as Papa from 'papaparse';
 import trainingdata from "./2023.json"
 
 
+function changeColor(upVoteBtn, btnToggle){
+	// console.log(btnToggle)
+	upVoteBtn.style.backgroundColor = "transparent";
+
+	// if (btnToggle){
+	// 	upVoteBtn.style.backgroundColor = "LightGray";
+	// 	btnToggle = false;
+	// } else{
+	// 	upVoteBtn.style.backgroundColor = "transparent";
+	// 	btnToggle = true;
+	// }
+
+	upVoteBtn.style.backgroundColor = "LightGray";
+
+	var button_ids = ["Poisson1Button", "Poisson2Button", "SVMButton", "RegressionButton"]
+	button_ids = button_ids.filter(e => e !== upVoteBtn.id);
+	console.log(button_ids)
+	let i = 0;
+	while (i < button_ids.length) {
+		// console.log(scores[i]);
+		var buttontoturnoff = document.getElementById(button_ids[i]);
+		buttontoturnoff.style.backgroundColor = "transparent";
+		i++;
+	}
+
+	return btnToggle
+}
+
+
 const App = () => {
 	const away_team_input = useRef();
 	const home_team_input = useRef();
 	const year_of_season_input = useRef();
 
+	var poisson1modelbuttontoggle = true;
+	var poisson2modelbuttontoggle = true;
+	var svmmodelbuttontoggle = true;
+	var regressionmodelbuttontoggle = true;
+
 	function possionModel1(){
 		// 2 methods: predicit specific match (have home/away team names)
 		// 		check accuracy of model by entire season (year string)
+
+		
+		var modelbuttonelem = document.getElementById("Poisson1Button");
+		poisson1modelbuttontoggle = changeColor(modelbuttonelem, poisson1modelbuttontoggle)
 
 		let home_team = home_team_input.current.value;
 		let away_team = away_team_input.current.value;
@@ -71,6 +109,10 @@ const App = () => {
 	}
 
 	function possionModel2(){
+
+		var modelbuttonelem = document.getElementById("Poisson2Button");
+		poisson2modelbuttontoggle = changeColor(modelbuttonelem, poisson2modelbuttontoggle)
+
 		let home_team = home_team_input.current.value;
 		let away_team = away_team_input.current.value;
 
@@ -119,6 +161,10 @@ const App = () => {
 	}
 
 	function svmModel3(){
+
+		var modelbuttonelem = document.getElementById("SVMButton");
+		svmmodelbuttontoggle = changeColor(modelbuttonelem, svmmodelbuttontoggle)
+
 		let home_team = home_team_input.current.value;
 		let away_team = away_team_input.current.value; 
 		
@@ -164,6 +210,10 @@ const App = () => {
 	}
 
 	function regressionModel4(){
+
+		var modelbuttonelem = document.getElementById("RegressionButton");
+		regressionmodelbuttontoggle = changeColor(modelbuttonelem, regressionmodelbuttontoggle)
+
 		let home_team = home_team_input.current.value; 
 		let away_team = away_team_input.current.value; 
 		
@@ -223,6 +273,7 @@ const App = () => {
 		model_descriton.innerHTML = ""
 	}
 	
+
 	const getInitialState = () => {
 		const season_year = "";
 		return season_year;
@@ -552,29 +603,37 @@ const App = () => {
 
 					<div className="space-y-2"> {/* Models */}
 						<button
-							id="PoissonModel" 
+							id="Poisson1Button" 
 							className="border-2 border-black py-2 px-4 w-full flex items-center space-x-2"
 							onClick={possionModel1}
+
 						>
 							<span>Poisson Model 1</span>
 						</button>
-						<button 
+						<button
+							id="Poisson2Button" 
 							className="border-2 border-black py-2 px-4 w-full flex items-center space-x-2"
 							onClick={possionModel2}
 						>
 							<span>Poisson Model 2</span>
 						</button>
-						<button className="border-2 border-black py-2 px-4 w-full flex items-center space-x-2"
+						<button
+							id="SVMButton" 
+							className="border-2 border-black py-2 px-4 w-full flex items-center space-x-2"
 							onClick={svmModel3}
 						>
 							<span>Support Vector Machine</span>
 						</button>
-						<button className="border-2 border-black py-2 px-4 w-full flex items-center space-x-2"
+						<button
+							id="RegressionButton" 
+							className="border-2 border-black py-2 px-4 w-full flex items-center space-x-2"
 							onClick={regressionModel4}
 						>
 							<span>Regression</span>
 						</button>
-						<button className="border-2 border-black py-2 px-4 w-full flex items-center space-x-2 border-black"
+						<button
+							id="RNNModel" 
+							className="border-2 border-black py-2 px-4 w-full flex items-center space-x-2 border-black"
 							onClick={rnnModel5}
 						>
 							<span>Recurrent Neural Network</span>

@@ -147,6 +147,7 @@ const App = () => {
 		// change img.src url and output text
 		if (file_name.length != 0) {
 			myImage.src = require("../data/poisson/" + file_name + ".jpg") 
+			myImage.width = 100
 			const model_output_text = document.getElementById("model_output_id");
 			model_output_text.innerHTML = output_text
 			model_output_text.hidden = false
@@ -534,10 +535,7 @@ const App = () => {
 			<header className="flex justify-between items-center py-4">
 				<div className="flex items-center space-x-2">
 					{/* pick logo */}
-					{/* 
-					<img src="logo.png" alt="Logo" className="w-8 h-8"
-					/> 
-					*/}
+					{/* <img src="logo.png" alt="Logo" className="w-8 h-8"/> */}
 					<h1 className="text-xl font-bold">Machine Learning Sandbox</h1>
 				</div>
 			</header>
@@ -547,6 +545,7 @@ const App = () => {
 					<img id="my-image" src=""
 						className="my-image"
 						hidden
+						
 						>
 					</img>
 					<div id="model_output_id"></div>
@@ -573,7 +572,10 @@ const App = () => {
 				<div className="w-3/4 bg-gray-100 p-4"> </div> */
 				}
 
-				<div className="w-1/4 space-y-4"> {/* Right Column*/}
+				<div 
+					className="w-1/4 space-y-4"
+					style={{background:"lightblue"}}	
+				> {/* Right Column*/}
 					
 					<div className="space-y-2">
 						Predict Specific Matchup
@@ -583,17 +585,20 @@ const App = () => {
 								ref={home_team_input}  
 								placeholder='Home Team'
 								size="10" 
-							/>
+								className="border-2 border-black"							/>
 							<input id="away_team_input"
 								type="text" style={{}}
 								ref={away_team_input}  
 								placeholder='Away Team'
 								size="10" 
+								className="border-2 border-black"
 							/>
 						</div>
 						Test Accuracy By Season
 						<div className="flex space-x-3"> 
-						<select value={season_year} onChange={changeSeasonYear}>
+						<select value={season_year} 
+							onChange={changeSeasonYear}
+							className="border-2 border-black">
 							<option value="Year"></option>
 							<option value="2023">2023</option>
 							<option value="2022">2022</option>
@@ -642,7 +647,7 @@ const App = () => {
 
 					<p>Train w/ your own data (coming soon) </p>
 					<div className="space-y-2"> {/* Upload Data */}		
-						<button className="bg-gray-200 py-2 px-4 rounded">Upload Data</button>
+						<button className="border-2 border-black bg-gray-200 py-2 px-4 rounded">Upload Data</button>
 						{/* <button className="bg-gray-200 py-2 px-4 rounded">Save Data</button> */}
 						{/* <button className="bg-gray-200 py-2 px-4 rounded">Clear all</button> */}
 					</div>
@@ -653,8 +658,8 @@ const App = () => {
 
 			</main>
 
-		<br/>
-		<div>
+		{/* <br/> */}
+		<div style={{background:"Azure"}}	>
 			About: 
 			Test different machine learning models to predict outcomes of soccer matches. <br/>
 			<li>Test by season - back test historical data to see how accurate model is accross entire season. </li>

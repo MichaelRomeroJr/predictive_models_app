@@ -1,7 +1,16 @@
 /* Add any custom styles here */
 .my-image {
-    /* height: 400px;
-    width: 500px; */
+    height: 400px;
+    width: 500px;
+    /* width: 75%;
+    height: 75%; */
+    /* display: flex;
+    align-items: center;
+    justify-content: center;
+    display: 'flex';
+    justify-content:'center';
+    align-items:'center';
+    height: '100vh'; */
 }
 .left-column {
     height: 600px;
